@@ -169,15 +169,14 @@ export const Selected = function (value, option) {
 };
 
 export function formatCurrency(amount, format = "ng-NG", field = null) {
-	// var $nF = new Intl.NumberFormat(format, {  }).format(amount);
-	// var $nF = parseFloat((Math.round(amount*100)/100)).toFixed(2).toLocaleString();
-	// if($nF.indexOf(".") === -1) {
-	//     $nF = $nF + ".00";
-	// }
-	// if(field !== null) {
-	//     field.val($nF);
-	// }
-	// return $nF;
+	var $nF = new Intl.NumberFormat(format, {}).format(amount);
+	if ($nF.indexOf(".") === -1) {
+		$nF = $nF + ".00";
+	}
+	if (field !== null) {
+		field.val($nF);
+	}
+	return $nF;
 }
 
 export function getCookie(cname) {
@@ -212,42 +211,42 @@ export function setCookie(cname, cvalue, exdays, domain) {
 
 export function dateFormat(date) {
 
-    var activity_date = moment(date).format('dddd DD, MMM h:mm a');
+	var activity_date = moment(date).format('dddd DD, MMM h:mm a');
 
-    var today = moment();
-    var action_date = moment(date);
+	var today = moment();
+	var action_date = moment(date);
 
-    var diff_days = today.diff(action_date, 'days');
+	var diff_days = today.diff(action_date, 'days');
 
-    if (diff_days > 365) {
-        activity_date = today.diff(action_date, 'years') + ' years ago';
-    } else if (diff_days > 30) {
-        activity_date = today.diff(action_date, 'months') + ' months ago';
-    } else if (diff_days > 7) {
-        activity_date = today.diff(action_date, 'weeks') + ' weeks ago';
-    } else if (diff_days > 1) {
-        activity_date = diff_days + ' days ago';
-    }
+	if (diff_days > 365) {
+		activity_date = today.diff(action_date, 'years') + ' years ago';
+	} else if (diff_days > 30) {
+		activity_date = today.diff(action_date, 'months') + ' months ago';
+	} else if (diff_days > 7) {
+		activity_date = today.diff(action_date, 'weeks') + ' weeks ago';
+	} else if (diff_days > 1) {
+		activity_date = diff_days + ' days ago';
+	}
 
-    return activity_date;
+	return activity_date;
 }
 
 export function getData(url) {
 
-    return $.ajax({
-        type: "GET",
-        url: url,
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function (resp) {
-            return resp;
-        },
-        error: function (error) {
-            console.error(error);
-            return error;
-        }
-    });
+	return $.ajax({
+		type: "GET",
+		url: url,
+		contentType: false,
+		cache: false,
+		processData: false,
+		success: function (resp) {
+			return resp;
+		},
+		error: function (error) {
+			console.error(error);
+			return error;
+		}
+	});
 }
 
 export default ValidateSubmit;
