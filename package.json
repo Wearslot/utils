@@ -1,6 +1,6 @@
 {
   "name": "wearslot-dev-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utility library for wearslot(Taojaa) devs",
   "main": "index.js",
   "scripts": {
