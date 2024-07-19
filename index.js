@@ -76,98 +76,6 @@ const FieldError = (field, message) => {
 	}
 };
 
-export function Timeout() {
-	var idleTime = 0;
-
-	// Increment the idle time counter every minute.
-	if (localStorage.getItem("_session")) {
-		setInterval(timerIncrement, 60000); // 1 minute
-	} else {
-		localStorage.setItem("_session", 0);
-	}
-
-	// Zero the idle timer on mouse movement.
-	$(document).on("mousemove", function (e) {
-		localStorage.setItem("_session", 0);
-	});
-	$(document).on("keypress", function (e) {
-		localStorage.setItem("_session", 0);
-	});
-
-	function timerIncrement() {
-		idleTime = Number(localStorage.getItem("_session")) + 1;
-		localStorage.setItem("_session", idleTime);
-
-		if (idleTime > 30) {
-			// 15 minutes
-			localStorage.clear();
-			deleteCookie("_apuid");
-			window.location.reload();
-		}
-	}
-}
-
-export function AmountField(field, data, callback = null) {
-	var value = $(field).val();
-	var c = data;
-
-	var regex = /[a-zA-Z!@#\$%\^\&*\)\(+=._-]+$/g;
-	var numbers = /^[0-9]+$/g;
-	if (c.match(regex)) {
-		$(field).val(value.replace(regex, ""));
-	} else if (c.match(numbers)) {
-		var p = 10 * Number(value);
-		$(field).val(parseFloat(p).toFixed(2));
-	}
-
-	if (callback !== null) {
-		callback(field);
-	}
-}
-
-export function Validator(field) {
-	var regex = null,
-		amountFrom = null;
-
-	$(field.attr("validationtarget")).html("");
-	regex = new RegExp(",", "g");
-	amountFrom = field.val().replace(regex, "");
-
-	try {
-		amountFrom = Number(amountFrom);
-		formatCurrency(amountFrom, "ng-NG", field);
-		return amountFrom;
-
-	} catch (error) {
-		$(field.attr("validation-target")).html(field.attr("validation-message"));
-	}
-
-	$(field.attr("validation-target")).html("");
-	regex = new RegExp(",", "g");
-	amountFrom = field.val().replace(regex, "");
-	console.log(amountFrom);
-
-	try {
-		amountFrom = Number(amountFrom);
-
-		formatCurrency(amountFrom, "ng-NG", field);
-		return amountFrom;
-
-	} catch (error) {
-		$(field.attr("validation-target")).html(field.attr("validation-message"));
-	}
-
-	return null;
-}
-
-export const Selected = function (value, option) {
-	if (value === option) {
-		return "selected";
-	} else {
-		return "";
-	}
-};
-
 export function formatCurrency(amount, format = "ng-NG", field = null) {
 	var $nF = new Intl.NumberFormat(format, {}).format(amount);
 	if ($nF.indexOf(".") === -1) {
@@ -252,9 +160,9 @@ export function getData(url) {
 
 export function randomString(length) {
 	const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var result = '';
-    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-    return result;
+	var result = '';
+	for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+	return result;
 }
 
 export default ValidateSubmit;
